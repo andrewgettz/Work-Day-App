@@ -55,3 +55,43 @@ for(let index = 0; index < 9; index++) {
     startTime++
 
 }
+
+//Set class for past, present, and future time block 
+function setDescClass(){
+
+    //Set class for Description div 
+    if(moment(startTime).isBefore(currentTime)) {
+        eventDesc.addClass('past')
+        console.log('past')
+    }
+
+    if(moment(startTime).isSame(currentTime)) {
+        eventDesc.addClass('present')
+        console.log('present')
+    }
+
+    if (moment(startTime).isAfter(currentTime)) {
+        eventDesc.addClass('future')
+        console.log('future')
+    }
+}
+
+//Add event listener to save button 
+$('.far').on('click', function(){
+
+    //Get data-id of save click which is set to index in array 
+    const dataId =$(this).attr('data-id')
+    console.log("The data-id of clicked item is: " + dataId)
+
+    //Take text area value with that currentId 
+    const eventText = $(`textarea[data-id|='${dataId}']`).val()
+    console.log("Event text is " + eventText)
+
+    //Set to description property 
+    events[dataId].description = eventText
+    console.log(events)
+
+    localStorage.setItem('events', JSON.stringify(events))
+
+    console.log("Description save for id: " + dataId)
+})
